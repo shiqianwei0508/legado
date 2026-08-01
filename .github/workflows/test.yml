@@ -253,7 +253,7 @@ jobs:
 
   prerelease:
     needs: [ prepare, build ]
-    if: github.event_name != 'pull_request' && github.repository == 'Luoyacheng/legado'
+    if: github.event_name != 'pull_request' && github.repository == 'Luoyacheng/legado-E'
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ needs.prepare.outputs.version }}
@@ -530,7 +530,7 @@ jobs:
             echo "apk_exists=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Upload to yuedu repository
+      - name: Upload to link-E repository
         continue-on-error: true
         if: steps.check-apk.outputs.apk_exists == 'true'
         run: |
@@ -538,13 +538,13 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           # 克隆目标仓库
-          git clone https://${{ secrets.S_GITHUB_TOKEN }}@github.com/Luoyacheng/yuedu.git yuedu-repo
+          git clone https://${{ secrets.S_GITHUB_TOKEN }}@github.com/Luoyacheng/link-E.git link-E-repo
           # 创建目录（如果不存在）
-          mkdir -p yuedu-repo/sigma
+          mkdir -p link-E-repo/sigma
           # 复制releaseS APK文件并重命名
-          cp ./apk-releaseS/*.apk yuedu-repo/sigma/leagado_Sigma_正式版.apk
+          cp ./apk-releaseS/*.apk link-E-repo/sigma/leagado_Sigma_正式版.apk
           # 提交更改
-          cd yuedu-repo
+          cd link-E-repo
           git add sigma/leagado_Sigma_正式版.apk
           git commit -m "Update sigma.apk to version ${{ needs.prepare.outputs.versionL }}"
           git push
